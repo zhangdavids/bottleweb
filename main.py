@@ -5,10 +5,16 @@ from bottle import route, run
 from bottle import template, static_file
 
 assets_path = './assets'
+download_path = './download'
 
 # @route('/assets/<filename:re:.*\.png>')
 # def server_static(filename):
 #
+
+#强制文件下载
+@route('/download/<filename:path>')
+def download(filename):
+    return static_file(filename, root=download_path, download=filename)
 
 @route('/assets/<filename:re:.*\.css|.*\.js|.*\.png|.*\.jpg|.*\.gif>')
 def server_static(filename):
