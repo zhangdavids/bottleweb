@@ -3,6 +3,7 @@
 
 from bottle import route, run
 from bottle import template, static_file, request
+from bottle import error, abort, redirect
 
 assets_path = './assets'
 download_path = './download'
@@ -11,6 +12,21 @@ save_path = './upload'
 # @route('/assets/<filename:re:.*\.png>')
 # def server_static(filename):
 #
+
+@error(404)
+def miss(code):
+    #错误页面，一般来说，可以在网站制定一个404的HTML页面，然后用return template('404')去访问404这个页面
+    return '没找到页面！'
+
+@route('/error')
+def nofound():
+    #引发404错误
+    abort(404)
+
+@route('/page')
+def page():
+    #当访问/page的时候，跳转到首页
+    redirect('/')
 
 #文件上传的HTML模板，这里没有额外去写html模板了，直接写在这里，方便点吧
 @route('/upload')
